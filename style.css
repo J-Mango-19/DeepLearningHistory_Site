@@ -1,0 +1,97 @@
+body{
+  color: black;
+  margin: 100px 20px;
+  max-width: 70%;
+  font-size: 22px;
+  display:flex; 
+}
+
+sub {
+font-size: 15px;
+}
+
+.equation {
+  font-size: 32px;
+  text-align: center;
+}
+
+#bigBracket {
+font-size: 65px;
+display: inline;
+}
+
+#intro {
+color: black; 
+}
+
+.explanation {
+color: black;
+padding: 10px;
+}
+
+#Img1 {
+  float: left;
+  margin: 10px;
+}
+
+.centerImg {
+  margin: 20px;
+  display: block;
+  justify-content: center;
+  display: flex;
+}
+
+.centerImgs {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+}
+.centerImgs img {
+  margin: 20px; 
+}
+
+#pp {
+margin: 0px;
+}
+
+.container {
+  width: 100%;
+  overflow: auto;
+}
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    width: 160px;
+    background: #f4f4f4;
+    padding: 10px;
+    height: 100vh; /* Full height of the viewport */
+    flex-shrink: 0;
+}
+
+.sidebar a:hover {
+    background: lightblue;
+}
+
+.sidebar a {
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    color: darkblue;
+}
+
+.content {
+    /*flex-grow: 1; */
+    padding: 20px;
+}
+
+.section {
+    padding: 20px;
+    border-bottom: 1px solid grey;
+}
+
+.container, .sidebar, .content, .section {
+  max-width: 100%;
+}

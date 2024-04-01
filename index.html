@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title> Iteration one of history of deep learning website </title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+
+  <body>
+ <div class="sidebar">
+    <a href="#intro">Intro</a>
+    <a href="#sec1"> 1943 - The McCulloch-Pitts Neuron</a>
+    <a href="#sec2">1957 - The Perceptron</a>
+    <a href="#sec3">1960 - ADALINE</a>
+    <a href="#sec4">1961 - MADALINE</a>
+  </div>
+
+ <div class="content"> 
+
+  <div id="intro">
+    <h1> Building an Intuition for Deep Learning, Historically </h1>
+    
+    <hr>
+
+    <p id="intro"> Modern variations on neural networks are the most powerful machine learning algorithms invented,
+    inspired by the architecture of the human brain and equipped with a powerful learning algorithm.
+    <br> Within the last decade, computers have become powerful enough to train massive neural 
+    networks exhibiting impressive and surprising capabilities. Deep neural networks are capable of learning nearly
+    anything, making them effective in self driving cars, medical image classfication, and playing complex games. <br>
+    Recently, the task of predicting the next word in a sequence of text has garnered them the most
+    attention, with some experts claiming that they can actually understand text they're given. <br>
+    It's fascinating to me how a process could appear to exhibit such high levels of intelligence over so many different
+    applications, which left me curious as to why it works. 
+    This website aims to build an intuition behind neural networks by following their progression through time, 
+    beginning with the first attempt to model the brain mathematically nearly 100 years ago. This isn't the
+    most efficient way to build an understanding of neural networks, however I started this project in the 
+    hope that it's satisfying to grow that understanding in a cumulative nature, following 
+    several brilliant scientists' contributions to machine learning as they progress toward a modern feedforward neural 
+    network.
+
+    <hr>
+
+    <h3> Table of Contents </h3>
+    <ol>
+      <li> Introduction </li>
+      <li> Warren McCulloch and Walter Pitts - 1940s </li>
+      <li> Frank Rosenblatt - 1950s </li>
+      <li> Bernard Widrow and Marian Hoff - 1960s </li>
+      <li> Geoffrey Hinton & Backpropagation - 1980s </li>
+
+    </ol>
+
+    <hr>
+
+  </div>
+
+  <div id="sec1">
+
+    <h3> 1943 - The McCulloch-Pitts Neuron </h3>
+    <p class="explanation"> In 1943, Warren McCulloch and Walter Pitts developed the first mathematical
+    representation of neurons in the brain, published in their paper "A Logical Calculus of the Ideas Immanent in Nervous Activity". </p>
+
+    <hr>
+  </div>
+
+  <div id="sec2">
+
+    <h3> 1957 - Rosenblatt's Perceptron </h3>
+    <p class="explanation"> In 1957, Frank Rosenblatt, a psychology professor at Cornell, implemented the first machine learning algorithm, known
+    as the perceptron. Very likely inspired by McCulloch and Pitts' mathematical model of neurons, Rosenblatt's
+    perceptron is capable of learning to determine a decision boundary for any linearly separable dataset.
+    However, many scientists in Rosenblatt's time were concerned 
+    by the perceptron's limitations and didn't see it as the future of machine learning. Professor Rosenblatt
+    passionately, and correctly, defended its potential. Sadly, he passed away more than a decade before the first
+    modern neural network was implemented. Although this algorithm is quite simple and limited by modern standards, all subsequent advancements in neural networks were built on this breakthrough, and the fundamentals from the perceptron are still present in every modern neural network. <br>
+    The essence of a perceptron is that it calculates the weighted sum of its inputs (so that some inputs
+    can be assigned greater importance than others) and compares that sum to a threshold: If the weighted
+    sum is above the threshold, then the perceptron outputs "True", or a 1. If the weighted sum is less than
+    the threshold, then the perceptron outputs a "False", or a 0. While a historic breakthrough in machine
+    learning, it's limited in that that it's only effective for linearly separable data and binary outputs.
+    We'll look at it in closer detail now. Rosenblatt implemented this algorithm in hardware, but we'll use 
+    software and visualize it geometrically. 
+    </p>
+
+    <p> Let's first consider a one dimensional perceptron. This model accepts one input value (x<sub>1</sub>) and has
+    two parameters, a weight (w<sub>1</sub>) and a threshold (θ) that the product of x<sub>1</sub> and w<sub>1</sub> must cross to be 
+    classified as positive. Since our input is one dimensional, our x vector only contains x<sub>1</sub> and our weight
+    vector only contains w<sub>1</sub>. 
+    </p>
+
+    <div class="container">
+    <div id="Img1"> 
+    <img src="1D-Perceptron.png" width = "600" height = "400" alt = "1D-vis"> 
+    </div>
+    
+    <div id="pp">
+      <br> <br>
+      From this visualization, we can see that our decision boundary occurs at \(w_1x_1 = θ\). <br> <br>
+      Red dots indicate \(x_1\) values where \(w_1x_1 < θ\). <br> <br>
+      Green dots indicate \(x_1\) values where \(w_1x_1 > θ\). <br> <br>
+      Note that adjusting θ moves our decision boundary horizontally. <br> <br>
+
+
+    </div>
+    </div>
+      An example use case for this basic perceptron is a predictor for whether I sign up for a class based on x, the number of hours after midnight 
+      the class is scheduled to start. 
+      Let's assume the model learned \(w_1 = 1\) and \(θ = 9\) as the parameters that predict my decision. This means that the model will predict 
+      "no" if \(w_1x_1 < 9\) (ie if the class starts before 9am) and "yes" otherwise.
+      <br><br>
+      \(w_1\) wasn't particularly helpful to us in this case since there was only one input dimension. As demonstrated in the next example, 
+      weights can be thought of as defining the relative importance of each input when there are multiple inputs, so that z is a weighted sum of inputs. 
+    <p> Our threshold is more commonly represented with bias "b" where b = -θ. Making this substitution yields a decision boundary equation that's easier to use in practice:  <br>
+    <div class="equation">
+      \(w_1x_1 = θ\) <br> 
+      \(w_1x_1 - θ = 0\) <br>
+      \(w_1x_1 + b = 0\)
+    </div> 
+    <br>
+    It's common practice to refer to the expression on the left as \(z\), represented visually below:  <br><br>
+    <div class="equation"> \(z = w_1x_1 + b\)</div>
+    <br>
+    <div class="centerImg">
+      <img src="z-representation.png" width = "350" height = "300" alt="Perceptron-eqn-vis">
+    </div>
+   
+    <p>
+    Now, let's give this perceptron multiple input dimensions. When we add another input (making it two 
+    dimensional), nothing else in the structure of the perceptron changes. This second input is called \(x_2\)
+    and it has a corresponding weight \(w_2\). In this case, \(z = w_1x_1 + w_2x_2 + b\). 
+    This is true for any number of inputs n, so we can write: <br>
+    <div class="equation"> 
+      \(z = w_1x_1 + w_2x_2 + ... + w_nx_n + b\).
+    </div>
+    <br>
+    This notation obviously becomes inconvenient if there are many inputs, which is one reason why input and
+    weight values are commonly held in an input vector (x) and a weight vector (w): <br>
+
+    <div class="centerImg">
+      <img src="vectors.png" width="200" height="210" alt="vector-vis">
+    </div>
+      
+    
+    <!-- note that the bias term does not correspond to a dimension. Rather, it moves the decision boundary
+      in the number of dimensions determined by the number of inputs. (in the direction of the weight vec)
+    -->
+
+    Now, we can substitute the dot product of vectors w and x into our equation for z, so that we have: <br>
+    <br> <div class="equation">
+      \(z = w \cdot x + b \)
+    </div><br>
+    As mentioned earlier, this dot product can be thought of as a weighted sum of the inputs, so that the "importance" of each input (its weight)
+    is factored into the calculation of z. 
+    Visually, this can be represented as: <br><br>
+    <div class="centerImg">
+      <img src="z_eqn2.png" width="400" height="400" alt="vector-vis">
+    </div>
+
+    Now we can formulaically define the Step Function F, the part of the perceptron which 
+    decides whether to output a 0 or a 1. The Step Function "activates" z, and although the definition of the function itself will change
+    as we move into more advanced models, the function that "activates" z will continue to be known as the <i> Activation Function</i>.<br> 
+      <br> The step function classfies the inputs as a 1 if 
+    z > 0, or in other words, if z lies above the decision boundary. <br> In the case that z < 0 
+    (z lies below the decision boundary), the step function classifies the input as a 0. <br><br>
+    In practice, it's quite rare for z equal exactly 0 
+    because this would mean that z is exactly on the decision boundary.
+    This means it's not significant how we classify it, but it's still included for the sake of completeness. In
+    the following definition I'll group it with the "0" classification. The output of the perceptron (ŷ)
+    is equal to the output of the step function F: <br>
+    <div class="centerImgs">
+      <img src="stepfxn.png" width="250" height="220" alt="stepfxn">
+    
+      <img src="full-perceptron-chart.png" width="320" height="300" alt="full-perceptron-chart">
+    </div>
+    Also, note y = <em> the actual value </em> for a given input. 
+    To help solidify this notation, let's take a look at a concrete example of a perceptron making 
+    decisions. I'll use this perceptron to predict whether I eat a meal or not. I'll assign an output of 
+    1 to "yes" and an output of 0 to "no". <br> 
+    <b>Inputs:</b> <br>
+    \(x_1\): how hungry I am, on a scale of 1-10 <br>
+     \(x_2\): how tasty the meal is, on a scale of 1-10 <br>
+     \(x_3\): the price of the meal, on a scale of 1-10 <br>
+     <b>Model Parameters:</b> <br>
+     \(w_1 = 1\) (so that the longer it's been since I ate, the more likely I am to eat a meal)<br>
+     \(w_2 = 0.9\) (same as reasoning as above, except slightly less because tastiness is slightly
+     less important to me)<br>
+     \(w_3 = -0.9\) (so that the more expensive the meal is, the less likely I am to eat it)<br>
+     \(b = 3.3\) <br>
+     It can be insightful to represent this model geometrically. The decision boundary is the plane separating
+     the red and green
+     points. Red points (inputs) are instances where I do eat a meal (y=1), and green points are inputs where 
+     I don't eat a meal(y=0). The perceptron classifies any new input point beyond the decision boundary
+     as 1 (ŷ = 1), and it classifies any input inside of the decision boundary as a 0 (ŷ = 0).
+     <h3> <a href = "https://c3d.libretexts.org/CalcPlot3D/index.html?type=point;point=(5,6,1);visible=true;color=rgb(0,255,0);size=4&type=point;point=(4,8,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(10,6,5);visible=true;color=rgb(0,255,0);size=4&type=point;point=(6,4,7);visible=true;color=rgb(0,255,0);size=4&type=point;point=(2,2,9);visible=true;color=rgb(255,0,0);size=4&type=point;point=(8,4,2);visible=true;color=rgb(0,255,0);size=4&type=point;point=(1,7,4);visible=true;color=rgb(0,255,0);size=4&type=point;point=(5,3,7);visible=true;color=rgb(255,0,0);size=4&type=point;point=(1,3,2);visible=true;color=rgb(255,0,0);size=4&type=point;point=(3,1,4);visible=true;color=rgb(255,0,0);size=4&type=point;point=(5,5,1);visible=true;color=rgb(0,255,0);size=4&type=point;point=(5,8,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(6,6,5);visible=true;color=rgb(0,255,0);size=4&type=point;point=(2,4,7);visible=true;color=rgb(255,0,0);size=4&type=point;point=(8,2,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(3,1,2);visible=true;color=rgb(255,0,0);size=4&type=point;point=(5,7,4);visible=true;color=rgb(0,255,0);size=4&type=point;point=(1,4,6);visible=true;color=rgb(255,0,0);size=4&type=point;point=(7,3,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(3,1,1);visible=true;color=rgb(255,0,0);size=4&type=implicit;equation=-3.3+x+0.9y-0.9z~0;cubes=16;visible=true;fixdomain=false;xmin=-8;xmax=8;ymin=-8;ymax=8;zmin=-8;zmax=8;alpha=-1;hidemyedges=false;view=0;format=normal;constcol=rgb(255,0,0)&type=vector;vector=%3C5,%205*0.9,%20-5*0.9%3E;visible=true;color=rgb(0,255,0);size=2;initialpt=(0,0,0)&type=window;hsrmode=0;nomidpts=true;anaglyph=-1;center=7.023722861702404,-6.845416761523661,1.951303800795873,1;focus=0,0,0,1;up=-0.33094742600197136,-0.0713480997600847,0.94094805907834,1;transparent=true;alpha=140;twoviews=false;unlinkviews=false;axisextension=0.7;shownormals=false;shownormalsatpts=false;xaxislabel=x1;yaxislabel=x2;zaxislabel=x3;edgeson=true;faceson=true;showbox=true;showaxes=true;showticks=true;perspective=true;centerxpercent=0.5;centerypercent=0.5;rotationsteps=30;autospin=true;xygrid=false;yzgrid=false;xzgrid=false;gridsonbox=true;gridplanes=false;gridcolor=rgb(128,128,128);xmin=-8;xmax=8;ymin=-8;ymax=8;zmin=-8;zmax=8;xscale=4;yscale=4;zscale=4;zcmin=-16;zcmax=16;xscalefactor=1;yscalefactor=1;zscalefactor=1;tracemode=0;keep2d=false;zoom=0.267667"> Link to this graph </a> </h3>
+     <div class="centerImg">
+       <img src="3d_plot1.png" width="600" height="600" alt="3d_vis">
+     </div>
+     Note that high x<sub>1</sub> and x<sub>2</sub> values with low x<sub>3</sub> values correspond to
+     me eating the meal. This lines up nicely with the weight values, since x<sub>1</sub> and x<sub>2</sub>
+     correspond to values which increase the likelihood of me eating as they increase, while x<sub>3</sub>
+     corresponds to a value that decreases the likelihood that I eat as it increases. In fact, if 
+     x<sub>3</sub> (price) reaches 10, then no amount of tastiness or hungriness alone will result in a
+     positive prediction, there must be some combination of both to make up for the price. <br><br> 
+
+     In this example, the weight vector is represented geometrically by the blue vector.
+     The weight vector of any perceptron is always perpendicular to the decision boundary (which is possible 
+     because the boundary is always linear). Since each element
+     of the weight vector can take on any value, its geometric representation can point in any direction.
+     It follows that weights 
+     determine the angle and direction of the decision boundary. <br> One way to think about the weight vector is
+     as a ratio of dimensions, similarly to how the slope of a line is a ratio of dimensions (rise/run).
+     The bias moves the decision boundary 
+     along that weight vector. Note that although the bias is included with weights and inputs in the 
+     calculation of z, it does not contribute a dimension. Rather, it moves the decision boundary according
+     to the ratio of dimensions provided by w. 
+     Three dimensions/inputs are the highest that are accessible for us to visualize, but
+     these principles hold true for hyperplane decision boundaries in any number of dimensions. Feel free
+     to <a href="https://c3d.libretexts.org/CalcPlot3D/index.html?type=point;point=(5,6,1);visible=true;color=rgb(0,255,0);size=4&type=point;point=(4,8,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(10,6,5);visible=true;color=rgb(0,255,0);size=4&type=point;point=(6,4,7);visible=true;color=rgb(0,255,0);size=4&type=point;point=(2,2,9);visible=true;color=rgb(255,0,0);size=4&type=point;point=(8,4,2);visible=true;color=rgb(0,255,0);size=4&type=point;point=(1,7,4);visible=true;color=rgb(0,255,0);size=4&type=point;point=(5,3,7);visible=true;color=rgb(255,0,0);size=4&type=point;point=(1,3,2);visible=true;color=rgb(255,0,0);size=4&type=point;point=(3,1,4);visible=true;color=rgb(255,0,0);size=4&type=point;point=(5,5,1);visible=true;color=rgb(0,255,0);size=4&type=point;point=(5,8,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(6,6,5);visible=true;color=rgb(0,255,0);size=4&type=point;point=(2,4,7);visible=true;color=rgb(255,0,0);size=4&type=point;point=(8,2,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(3,1,2);visible=true;color=rgb(255,0,0);size=4&type=point;point=(5,7,4);visible=true;color=rgb(0,255,0);size=4&type=point;point=(1,4,6);visible=true;color=rgb(255,0,0);size=4&type=point;point=(7,3,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(3,1,1);visible=true;color=rgb(255,0,0);size=4&type=implicit;equation=-3.3+x+0.9y-0.9z~0;cubes=16;visible=true;fixdomain=false;xmin=-8;xmax=8;ymin=-8;ymax=8;zmin=-8;zmax=8;alpha=-1;hidemyedges=false;view=0;format=normal;constcol=rgb(255,0,0)&type=vector;vector=%3C5,%205*0.9,%20-5*0.9%3E;visible=true;color=rgb(0,255,0);size=2;initialpt=(0,0,0)&type=window;hsrmode=0;nomidpts=true;anaglyph=-1;center=7.023722861702404,-6.845416761523661,1.951303800795873,1;focus=0,0,0,1;up=-0.33094742600197136,-0.0713480997600847,0.94094805907834,1;transparent=true;alpha=140;twoviews=false;unlinkviews=false;axisextension=0.7;shownormals=false;shownormalsatpts=false;xaxislabel=x1;yaxislabel=x2;zaxislabel=x3;edgeson=true;faceson=true;showbox=true;showaxes=true;showticks=true;perspective=true;centerxpercent=0.5;centerypercent=0.5;rotationsteps=30;autospin=true;xygrid=false;yzgrid=false;xzgrid=false;gridsonbox=true;gridplanes=false;gridcolor=rgb(128,128,128);xmin=-8;xmax=8;ymin=-8;ymax=8;zmin=-8;zmax=8;xscale=4;yscale=4;zscale=4;zcmin=-16;zcmax=16;xscalefactor=1;yscalefactor=1;zscalefactor=1;tracemode=0;keep2d=false;zoom=0.267667"> experiment</a> with different weights and biases yourself.
+
+  <br><br>
+      <h2> Training </h2>
+
+      <a href="https://github.com/J-Mango-19/Perceptron-implementation/blob/main/perceptron.py"> Perceptron Code </a> <br>
+      What made the perceptron groundbreaking was its ability to learn. Given enough labeled examples to 
+      train on, the perceptron decided the optimal values of the weights and bias completely on its own 
+      (This assumes that the data is linearly separable, which we will go into detail on later). The perceptron modeled
+      above learned to place the decision plane with just the points on the graph. We'll follow the 
+      perceptron through this learning process. 
+
+    </p>
+    
+    <p>
+    The learning rate is a value (denoted by α), usually between 0 and 1, that is used to control how fast
+    the perceptron
+    learns. For example, if it's 0, the perceptron won't learn at all, and if it's one, the perceptron 
+    learns rather quickly. We'll see later what happens if the perceptron learns too quickly,
+    but for now, we'll use an appropriate setting to see how it works.
+    The perceptron updates its own weights and biases according to this learning rule: <br><br>
+
+    <div class="equation">
+    error = \((y - ŷ)\) <br>
+    \(w_1 = w_1 + error*α*x_1\)</sub> <br>
+     \(b = b + error*α\)
+    </div>
+    <br> Let's apply the learning rule to my meal prediction perceptron, using the points shown on the graph as
+    training data. Since this took 580 iterations to train, we will only look at a handful of examples. From now on, I will demonstrate calculations using vector notation, but 
+    explicit notation is included below for reference. <br> <br>
+
+    Explicit notation: \(z = w \cdot x + b = w_1x_1 + w_2x_2 + w_3x_3 + b\)<br>
+    Vector notation: \(z = w \cdot x + b =  [w_1, w_2, w_3] \cdot [x_1, x_2, x_3] + b\) <br><br><br>
+    
+    Before a perceptron begins training, we initialize the weight vector and bias of the perceptron to 0 (Sometimes
+    they are initialized to small random values, but either method works). This means that
+    z will always be zero, so F(z) will always be zero. For any input vector, this untrained perceptron will 
+    always output "0". <br> <br>
+
+    Input vectors: <br> 
+    \(x_1 = [3, 7, 1, 5, 3, 8, 2, 6, 5, 5, 3, 1, 5, 1, 8, 2, 6, 10, 4, 5]\) <br>
+    \(x_2 = [1, 3, 4, 7, 1, 2, 4, 6, 8, 5, 1, 3, 3, 7, 4, 2, 4, 6, 8, 6]\) <br>
+    \(x_3 = [1, 3, 6, 4, 2, 3, 7, 5, 3, 1, 4, 2, 7, 4, 2, 9, 7, 5, 3, 1]\) <br>
+    \(y = [0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1]\) <br> <br>  
+
+    <h3> Training Point 1: </h3>
+
+    The first input the perceptron will train on is the point x = (x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>)
+    = (3, 1, 1). Its corresponding y value is 0, so this point is labeled with red on the graph.
+    We already know that this perceptron will always output zero, but we'll follow its calculations for clarity: 
+     <br><br>
+    
+    Model's Prediction:<br>
+    \(z = [0, 0, 0,] \cdot [3, 1, 1] + 0 = 0\) <br>
+    \(F(0) = 0\) <br>
+    Perceptron's output: 0 <br> <br>
+
+    Parameter update: <br>
+    error = (0 - 0) = 0<br>
+    w<sub>1</sub> = 0 + (0.1)(0)(3) = 0 <br>
+    w<sub>2</sub> = 0 + (0.1)(0)(1) = 0 <br>
+    w<sub>3</sub> = 0 + (0.1)(0)(1) = 0 <br>
+    b = 0 + (0.1)(0)  = 0 <br> <br>  
+
+    This result demonstrates that the perceptron does not update itself in every training example. The perceptron only
+    looks at one point at a time, and it classified this point correctly (error = 0), so it doesn't update parameters. 
+    In the second training example, the perceptron will misclassify a point and we'll see it update its parameters.
+    <br><br>
+    
+    <h3> Training Point 2: </h3>
+
+    The second point the perceptron will train on is x = (7, 3, 3). y = 1 for this point, so it's 
+    labeled with green on the graph. Its calculations are as follows: <br> <br> 
+    
+    Model's Prediction:<br>
+    \(z = [0, 0, 0] \cdot [3, 1, 1] + 0 = 0\) <br>
+    \(F(0) = 0\) <br>
+    Perceptron's output: 0 <br> <br>
+
+    Parameter update: <br>
+    error = (1 - 0) = 1<br>
+    w<sub>1</sub> = 0 + (0.1)(1)(7) = 0.7 <br>
+    w<sub>2</sub> = 0 + (0.1)(1)(3) = 0.3 <br>
+    w<sub>3</sub> = 0 + (0.1)(1)(3) = 0.3 <br>
+    b = 0 + (0.1)(1)  = 0.1 <br> <br>
+
+    This updated perceptron is represented geometrically below. Notice that the weights already orient the decision
+    boundary in vaguely the right direction, and the bias actually updated in the wrong direction in this instance 
+    (It hasn't seen a point yet where it needs to move the decision boundary further into the first quadrant, this
+    happens when it predicts a "1" for a "0"). The weights and biases will both improve as the model sees
+    more training examples. <br><br>
+
+    <div class="centerImg">
+      <img src="perceptron_point2_graph.png" width="350" height="340" alt="perceptron-pt-2">
+    </div>
+
+    <h3> Training Point 3: </h3>
+
+    The third point the perceptron will train on is \(x = (1, 4, 6), y = 0\). The calculations are as follows: <br>
+    <br> 
+    Model's Prediction:<br>
+    \(z = [0.7, 0.3, 0.1] \cdot [1, 4, 6] + 0.1 = 2.6 \)<br>
+    \(F(2.6) = 1\)<br>
+    Perceptron's output: 1 <br> <br>
+
+    Parameter update: <br>
+    error = (0 - 1) = -1 <br>
+    \(w_1 = 0.7 + (0.1)(-1)(1) = 0.6\) <br>
+    \(w_2 = 0.3 + (0.1)(-1)(4) = -0.1\) <br>
+    \(w_3 = 0.3 + (0.1)(-1)(6) = -0.3\) <br>
+    \(b = 0.1 + (0.1)(-1) = 0\) <br> <br>
+
+    This updated perceptron is again represented geometrically below. Notice that it begins to separate the red 
+    and green points. Our weights are slightly more accurate, and the bias has moved the decision boundary
+    back towards the first quadrant as desired. 
+    <br><br>
+    <div class="centerImg">
+      <img src="perceptron_point3_graph.png" width="340" height="350" alt="perceptron-pt-3"> 
+    </div> 
+
+    The perceptron looks at each point multiple times to determine the decision boundary. This perceptron looked
+    at each point 29 times, for a total of 580 iterations. Each time the perceptron goes all the way down the 
+    input vectors (i.e. each "pass through" the data) is known as an epoch. Once the perceptron has completed an
+    entire epoch without making any updates, the model stops learning. Another way to say this is that the model
+    converges. Below is another view of the model after it has converged. 
+
+    <div class="centerImg">
+      <img src="3d_img3.png" width="340" height="350" alt="perceptron-trained">
+    </div>
+
+
+    
+    <br><br><br>
+    If the training data for a perceptron is not linearly separable, it will never converge because it will keep
+    moving the decision boundary indefinitely. This limitation in machine learning is addressed by the perceptron's
+    successor only a handful of years later. 
+    </p>
+
+    <h3> Another way to think about the perceptron </h3>
+
+    We can get a deeper geometric understanding of the perceptron by treating each x value as a vector rather than
+    a point. Each x vector starts at the origin and ends where their corresponding point was. <br>
+    Again, we'll use the dot product of vectors to determine z. In this format, we update the weights when the
+    angle between a "1" x vector and the weight vector is more than 90 degrees (this means that their dot product
+    is negative), or if the angle between a "0" x vector and the weight vector is less than 90 degrees (this means
+    that their dot product is positive). I need to find a better way to explain this.
+    <hr>
+  </div>
+
+  <div id="sec3">
+    <h3> 1960 - ADALINE - Bernard Widrow and Ted Hoff </h3>
+
+    <p> 
+    ADALINE (Adaptive Linear Element) was an early improvement on the Perceptron. Invented at Stanford University
+    by Bernard Widrow and his student Ted Hoff, ADALINE built on the perceptron with an updated learning rule that
+    made it capable of finding a decision boundary for data that was not linearly separable. Still, the decision 
+    boundary itself was constrained to be linear, and couldn't perfectly fit nonlinear data. 
+    This constraint was removed only a year later by Widrwow and Hoff with MADALINE. 
+    <br> <br>
+
+    ADALINE utilizes the same structure as the perceptron, but with a different learning algorithm. One key difference
+    between the models is that the perceptron implements its learning algorithm using the result of the step 
+    function, while ADALINE learns from the z value before it's passed through the step function. <br><br>
+    </p>
+
+    <div class="centerImgs">
+      <img src="perceptron-learning.png" width="520" height="300" alt="perceptron-learning">
+      <img src="ADALINE-learning.png" width="520" height="300" alt="ADALINE-learning">
+    </div>
+    
+    <p>
+    Below is Widrow and Hoff's original diagram of ADALINE. As with the perceptron, ADALINE was originally
+    implemented in hardware. For reference, a's are weights, and a<sub>0</sub> and the "1" make up the bias. 
+    <div class="centerImg">
+      <img src="widrows-ADALINE.png" width="600" height="320" alt="Widrows-ADALINE">
+    </div>
+
+    The second key difference is ADALINE's learning algorithm itself. Moving the error calculation and weight 
+    update to before the step function is key because it makes the error calculation differentiable. 
+    This allows ADALINE to utilize gradient descent, a method still used today, to reach the least mean squared error (ADALINE's loss function will
+    be covered later). <br><br>
+
+    The gradient is a vector made up of derivatives, each of which can be thought of as slope at a point with respect to one
+    input dimension. Therefore, the vector containing all of these points in the combined direction of all the slopes. This property 
+    guarantees that it points in the direction of fastest increase at any point. It follows that we can take
+    the negative of the gradient to discern the direction of fastest decrease. Additionally,
+    the length of the gradient vector corresponds to the steepness of the change at that point. Applied to our
+    loss function, we can repeatedly move in the direction of fastest decrease until we reach the lowest value of
+    the loss function, AKA the best solution. This fundamental machine learning process is known as gradient 
+    descent and it's still used to train modern neural networks. Below is an example of gradient descent
+    applied to a simple function. <br><br>
+
+    For the sake of an introductory example, imagine a simple ADALINE with one weight and
+    a bias value. Suppose the loss of this fictitious model is given by \(L(w,b)\) as seen below: <br> 
+
+    Function: \(L(w,b) = w^2 + b^2\) <br>
+    Gradient: \(∇L = [2w, 2b]\) <br>
+
+    In this example, \(w\) and \(b\)
+    are represented by the x and y axes. \(L(w,b)\) is represented by the z-axis. Our goal is to minimize L by
+    choosing the optimal values for w and b. Graphically, this looks like finding the spot on the xy plane such
+    that the loss function (the height of this graph) is at its lowest point. Here, we'll see 
+    the effectiveness of gradient descent in finding the solution. Let's say we start at the point 
+    (2,1). \(L(2,1) = 2^2 + 1^2 = 5\).
+    
+    <div class="centerImg">
+      <img src="loss-fxn.png" width="550" height="430" alt="loss-fxn">
+    </div>
+
+    Gradient descent begins with calculating the gradient of the loss function. The gradient is
+    calculated by taking the derivative of the loss function with respect to each variable and formatting each
+    of those into an element of a vector.
+    Here, this looks like: <br><br> 
+    ∇L = [ \( \frac{dL}{dw} \),\( \frac{dL}{db} \) ] <br>
+    = \([ 2w, 2b ]\) <br>
+    = \([ 2(2), 2(1) ]\) <br>
+    = \([ 4, 2]\) so that the negative gradient is \([-4, -2]\) <br><br>
+    Our gradient vector is graphed below on our loss function. It's pointing in the right direction, but it's
+    clear that it's far too long.
+    This vector is overshooting the minimum, a problem solved in machine learning by using a learning
+    rate. For the rest of this example, we'll scale our gradient vectors by a learning rate of 0.1 to avoid 
+    overshooting.
+    <div class="centerImg">
+      <img src="Grad-descent-1.png" width="400" height="320" alt="grad-descent-1">
+    </div>
+    Without scaling according to a learning rate, our new weight and bias coordinates would have been: <br>
+    w = 2 - 4 = -2 <br>
+    b = 1 - 2 = -1 <br>
+    L(-2, -1) = (-2)<sup>2</sup> + (-1)<sup>2</sup> = 5 <br>
+    The unscaled vector yields no improvement in the loss. Let's recalculate using a learning rate of 0.1:<br><br>
+    w = 2 + (0.1)(-4) = 1.6 <br>
+    b = 1 + (0.1)(-2) = 0.8 <br>
+    L(1.6, 0.8) = 3.2 <br>
+    Utilizing the scaled vector improves the loss significantly. 
+    <div class="centerImg">
+      <img src="grad-descent-1-scaled.png" width="530" height="380" alt="grad-descent-scaled">
+    </div>
+
+    Repeating this process guides the parameters to values that minimize the loss of the function. Following
+    Gradient descent through the next point: <br><br>
+    \(∇L = [2w, 2b]\) <br>
+    \(∇L = [ 2(1.6), 2(0.8) ] = [ 3.2, 1.6 ]\) <br>
+    Taking the negative and scaling with the learning rate yields the vector that we'll adjust the parameters 
+    with:<br> [ -0.32, -0.16 ] <br><br>
+    Calculating new w and b values: <br>
+    \(w = 1.6 - 0.32 = 1.28\) <br>
+    \(b = 0.8 - 0.16 = 0.64\) <br>
+    \(L( 1.28, 0.64 ) = 2.048\) <br>
+    Again, loss decreases as desired. In practice, this process is repeated many, many times. A few more steps
+    are visualized below. 
+
+    <div class="centerImg">
+      <img src="grad-descent-2.png" width="750" height="440" alt="grad-descent-2">
+    </div>
+
+    Notice that the steps get smaller as the graph becomes less steep. A useful analogy is a ball rolling down
+    a hill. It will always move in the direction of steepest descent, but it will move slower when the hill is
+    less steep.<br><br> The ball also illustrates a weakness of gradient descent: it can get "stuck" in a region above
+    the function's minimum if it has no downhill path to it. Consider this two-dimensional example where the
+    green ball iterates until it gets stuck: 
+
+    <div class="centerImg">
+      <img src="local-min.png" width="550" height="350" alt="local-min">
+    </div>
+
+    There are methods to mitigate this phenomenon, but even today there's no perfect solution to it. ADALINE's
+    loss function is simple enough so that this won't happen, and gradient descent can find the absolute minimum
+    of the loss function.
+    </p>
+
+    <h4> ADALINE's Loss Function </h4>
+    \[ Loss = \frac 1n \sum_{i=1}^{n} (\hat{y}^{[i]} - y^{[i]})^2 \]
+
+    The loss function sums the square difference between the model's calculated z value and the
+    correct value for each point <em>i</em>. Then, it divides that sum by the number of points <em>n</em>, which returns 
+    the average loss. Recall that unlike the perceptron, \(\hat{y}\) is not restricted to 0 or 1, it's the actual value of z
+    before it passes through the step function. This
+    gives ADALINE the ability to learn even when it classifies a point correctly, which makes it a faster learner 
+    than the perceptron. <br> <br>
+
+    Although Widrow and Hoff proposed this formula as the sum of mean squared errors over each point, they were
+    forced to implement it using the squared error of one point at a time due to the limitations of hardware at
+    their time. We'll look at the sum of mean squared errors because it works best for ADALINE, but their 
+    implementation (known as stochastic gradient descent) actually does have advantages that emerge later in
+    multilayer neural networks. <br><br>
+
+    At each point <em>i</em>, evaluating the gradient of this function involves taking the its derivative with
+    respect to each weight
+    w<sub>j</sub> and then its derivative with respect to the bias, formatting all of these into a vector of 
+    <em>m</em> weights:
+    <br> 
+    \[ \nabla L^{[i]} = [  \frac{dL}{dw_1} , \frac{dL}{dw_2} ,  ... \frac{dL}{dw_m},
+    \frac{dL}{db}  ]\] <br><br>
+        
+    Before calculating the gradient, it's important to recall the chain rule, which dictates 
+    \(\frac{dL}{dw} = \frac{dL}{d\hat{y}} \cdot \frac{d\hat{y}}{dw}\). The chain rule will be instrumental
+    in calculating gradients in modern neural networks. <br><br>
+
+    For each weight w<sub><em>j</em></sub> in the gradient vector described above, the gradient of this loss
+    function is calculated as: <br>
+
+    \[ L = \frac 1n \sum_{i=1}^{n} (\hat{y}^{[i]} - y^{[i]})^2 \]
+
+    \[\frac{dL}{dw_j} = \frac{dL}{d\hat{y}} \cdot \frac{d\hat{y}}{dw_j} \]
+
+    \[= \frac{1}{n} \sum_{i=1}^{n} 2(\hat{y}^{[i]} - y^{[i]}) \cdot \frac{d\hat{y}}{dw_j} \]
+
+    \[= \frac{2}{n} \sum_{i=1}^{n} (\hat{y}^{[i]} - y^{[i]}) \cdot \frac{d}{dw}(w_jx_j + b)^{[i]} \]
+
+    \[= \frac{2}{n} \sum_{i=1}^{n} (\hat{y}^{[i]} - y^{[i]}) \cdot x_j^{[i]} \]
+
+    For the bias term of the gradient vector, the process is the same except \( dL \) is calculated with respect 
+    to the bias, so the 
+    objective is to solve for \( \frac{dL}{db} \) instead.
+
+      
+    \[\frac{dL}{db} = \frac{dL}{d\hat{y}} \cdot \frac{d\hat{y}}{db} \]
+
+    
+    \[= \frac{1}{n} \sum_{i=1}^{n} 2(\hat{y}^{[i]} - y^{[i]}) \cdot \frac{d\hat{y}}{db} \]
+  
+        
+    \[= \frac{2}{n} \sum_{i=1}^{n} (\hat{y}^{[i]} - y^{[i]}) \cdot \frac{d}{db}(w_jx_j + b)^{[i]} \]
+    
+     \[= \frac{2}{n} \sum_{i=1}^{n} (\hat{y}^{[i]} - y^{[i]}) \cdot 1 \]
+
+    Gradient descent for an ADALINE model in any number of dimensions n utilizes the same process as described
+    earlier, except that the loss function and therefore its gradient are different from the hypothetical example 
+    given earlier. Each weight and bias are reassigned according to the rules of gradient descent: 
+
+    \[w_j := w_j + (LR)(\frac{-2}{n} \sum_{i=1}^{n} (\hat{y}^{[i]} - y^{[i]}) \cdot x_j^{[i]})  \]
+    
+     \[b := b + (LR)(\frac{-2}{n} \sum_{i=1}^{n} (\hat{y}^{[i]} - y^{[i]})) \]
+    
+    Notice that the model parameters are only updated once per training epoch.
+    The model first sums the gradient vectors from every point before dividing by the number of points to 
+    yield the average gradient. This averaged gradient vector is what's used in the parameter update.
+    <br><br>
+
+
+
+    <h2> Training </h2>
+
+    <a href="https://github.com/J-Mango-19/Adaline-implementation/blob/main/Adaline_GD.py"> Code for ADALINE (Gradient descent) </a> <br>
+    Let's train an ADALINE model on the same dataset as the perceptron: <br>
+    \(x_1 = [3, 7, 1, 5, 3, 8, 2, 6, 5, 5, 3, 1, 5, 1, 8, 2, 6, 10, 4, 5]\) <br>
+    \(x_2 = [1, 3, 4, 7, 1, 2, 4, 6, 8, 5, 1, 3, 3, 7, 4, 2, 4, 6, 8, 6]\) <br>
+    \(x_3 = [1, 3, 6, 4, 2, 3, 7, 5, 3, 1, 4, 2, 7, 4, 2, 9, 7, 5, 3, 1]\) <br>
+    \(y = [0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1]\) <br><br>
+
+    If we train an ADALINE model with the dataset as is, it actually doesn't converge to a solution that separates
+    every datapoint correctly. This happens because the model's loss function isn't working correctly. Recall 
+    that it's 
+    trying to minimize  \( L = \frac 1n \sum_{i=1}^{n} (\hat{y}^{[i]} - y^{[i]})^2 \). The heart of this 
+    calculation is the difference between \(\hat{y}\) and \(y\). Since our y vector contains more "1" 
+    than "0" values, this model can minimize its loss easily by picking weights and biases that are between 1 and
+    0, but closer to 1. It isn't punished much when it misclassifies a 0 as a 1 in this scenario, so it doesn't 
+    change accordingly. <br>
+    The solution to this issue is to punish the model equally for misclassifying a 0 or a 1. An easy way to do 
+    this is to change every
+    "0" value in the y vector to "-1". This way, the model is punished more for making decisions that 
+    simply decrease the average difference between \(\hat{y}\) and \(y\). Now to minimize the loss function, 
+    it's forced to adjust its weights to fit the training data, as desired. <br><br>
+
+    \(y = [-1, 1, -1, 1, -1, 1, -1, 1, 1, 1, -1, -1, -1, 1, 1, -1, 1, 1, 1, 1]\) <br><br>
+
+    In training this ADALINE model, it also becomes apparent that the learning rate that worked for the
+    perceptron (0.1) causes this model's error to "explode", or increase rapidly. This happens because of the
+    overshooting phenomenon described in gradient descent earlier. The weights change too quickly because
+    their update involves greater values than in the perceptron. However, we can mitigate this by choosing a lower
+    learning rate. <br><br>
+
+    Once the learning rate is lowered to 0.015, ADALINE easily outperforms the perceptron in terms of steps to a solution. 
+    This model learns a decision boundary that classifies every point in the dataset
+    correctly in 227 steps, a 60% improvement over the perceptron. Unfortunately the loss function
+    has too many dimensions to be visualized, but it's still easy to watch the decision boundary update as demonstrated in
+    the next example. <br><br>
+
+    This ADALINE model begins with a mean squared error (MSE) of 1. This is due to the fact that for 
+    every input point, \(\hat{y}\) = 0 and \(y\) = 1 or -1. Applying the step function to this 0 output means
+    that the model predicts a "-1", no matter what the input is. <br><br>
+
+    After the average gradient has been calculated, negated, and scaled according to the learning rate (as shown
+    above), the parameters can
+    be reassigned:<br> 
+    \[w_1 = 0 + 0.075 = 0.075\]
+    \[w_2 = 0 + 0.071 = 0.071\]
+    \[w_3 = 0 + 0.005 = 0.005\]
+    \[b = 0 + 0.006 = 0.006\]
+    Now, MSE = 0.8, a significant improvement over the original MSE of 1. Note that the optimal linear decision
+    boundary for this dataset has a MSE of about 0.18, not 0. The model's current decision boundary is 
+    visualized below: 
+    <h3> <a href="https://c3d.libretexts.org/CalcPlot3D/index.html?type=point;point=(5,6,1);visible=true;color=rgb(0,255,0);size=4&type=point;point=(4,8,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(10,6,5);visible=true;color=rgb(0,255,0);size=4&type=point;point=(6,4,7);visible=true;color=rgb(0,255,0);size=4&type=point;point=(2,2,9);visible=true;color=rgb(255,0,0);size=4&type=point;point=(8,4,2);visible=true;color=rgb(0,255,0);size=4&type=point;point=(1,7,4);visible=true;color=rgb(0,255,0);size=4&type=point;point=(5,3,7);visible=true;color=rgb(255,0,0);size=4&type=point;point=(1,3,2);visible=true;color=rgb(255,0,0);size=4&type=point;point=(3,1,4);visible=true;color=rgb(255,0,0);size=4&type=point;point=(5,5,1);visible=true;color=rgb(0,255,0);size=4&type=point;point=(5,8,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(6,6,5);visible=true;color=rgb(0,255,0);size=4&type=point;point=(2,4,7);visible=true;color=rgb(255,0,0);size=4&type=point;point=(8,2,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(3,1,2);visible=true;color=rgb(255,0,0);size=4&type=point;point=(5,7,4);visible=true;color=rgb(0,255,0);size=4&type=point;point=(1,4,6);visible=true;color=rgb(255,0,0);size=4&type=point;point=(7,3,3);visible=true;color=rgb(0,255,0);size=4&type=point;point=(3,1,1);visible=true;color=rgb(255,0,0);size=4&type=implicit;equation=-3.3+x+0.9y-0.9z~0;cubes=16;visible=true;fixdomain=false;xmin=-8;xmax=8;ymin=-8;ymax=8;zmin=-8;zmax=8;alpha=-1;hidemyedges=false;view=0;format=normal;constcol=rgb(255,0,0)&type=vector;vector=%3C5,%205*0.9,%20-5*0.9%3E;visible=true;color=rgb(0,255,0);size=2;initialpt=(0,0,0)&type=window;hsrmode=0;nomidpts=true;anaglyph=-1;center=7.023722861702404,-6.845416761523661,1.951303800795873,1;focus=0,0,0,1;up=-0.33094742600197136,-0.0713480997600847,0.94094805907834,1;transparent=true;alpha=140;twoviews=false;unlinkviews=false;axisextension=0.7;shownormals=false;shownormalsatpts=false;xaxislabel=x1;yaxislabel=x2;zaxislabel=x3;edgeson=true;faceson=true;showbox=true;showaxes=true;showticks=true;perspective=true;centerxpercent=0.5;centerypercent=0.5;rotationsteps=30;autospin=true;xygrid=false;yzgrid=false;xzgrid=false;gridsonbox=true;gridplanes=false;gridcolor=rgb(128,128,128);xmin=-8;xmax=8;ymin=-8;ymax=8;zmin=-8;zmax=8;xscale=4;yscale=4;zscale=4;zcmin=-16;zcmax=16;xscalefactor=1;yscalefactor=1;zscalefactor=1;tracemode=0;keep2d=false;zoom=0.267667"> Link to this graph, consider following along by changing weights in decision boundary equation </a></h3>
+  
+    <div class="centerImg">
+      <img src="adaline-1.png" width="400" height="400" alt="adaline-1">
+    </div>
+
+    While it's clear that this model isn't useful yet, it's already oriented itself in generally the right 
+    direction after just the first parameter update. 
+    <br><br>
+
+    Before the second parameter update, the model recalculates the average gradient, then negates and scales 
+    it.
+    This updated gradient is added to the current paramters in the parameter update:
+    \[w_1 = 0.075 + -0.03 = 0.045\]
+    \[w_2 = 0.071 + -0.027 = 0.044\]
+    \[w_3 = 0.005 + -0.073 = -0.068\]
+    \[b = 0.006 + -0.013 = -0.008\]
+    The updated parameters reduce the MSE to 0.66. Already, most of the points are classified correctly. Its
+    updated decision boundary is visualized below: 
+
+    <div class="centerImg">
+      <img src="adaline-2.png" width="400" height="400" alt="adaline-2">
+    </div>
+
+    Subsequent parameter updates won't impact the model much individually because of the low learning rate, but
+    the final model (225 steps later) is shown: 
+
+    <div class="centerImg">
+      <img src="adaline-3.png" width="400" height="400" alt="adaline-3">
+    </div>
+
+    
+    Another solution to the overshooting problem is more modern, and unavailable to Widrow and Hoff because their 
+    mechanism only accepted
+    "-1" and "1" for inputs, rather than the values 1-10 used in this example. It's known as batch normalization.
+    Each input
+    vector is "squashed" according to the following equation, so that its values are all between [0, 1]. 
+    
+    \[x' = \frac{x-min(x)}{max(x)-min(x)}\]
+
+    <a href="https://github.com/J-Mango-19/Adaline-implementation/blob/main/Adaline_GD_normalized.py"> ADALINE Python code (GD, normalized) </a> <br>
+    Normalizing the input data allows us to use the original learning rate of 0.1, so that model perfectly 
+    separates the input data after only 29 iterations. We can use a higher learning rate here because the
+    x values, being between 0 and 1, are no longer scaling up the weights. Batch normalization is so effective 
+    in this example that it can handle a learning rate of up to 0.6, in which case it classifies the input data
+    perfectly after only 3 updates. <br><br>
+
+    The training of modern neural networks are often assessed using "elbow" graphs, such as the one shown 
+    below (this one was generated from the 0.1 learning rate ADALINE model). The idea is to train model until
+    the loss stops decreasing significantly.  
+
+    <div class="centerImg">
+      <img src="loss-chart.png" width="550" height="350" alt="loss-chart">
+    </div>
+
+    Professor Widrow actually devised a method to estimate the number of training
+    iterations an ADALINE model would need before it started to flatten out. Through experimentation, he found
+    that the number of point required to train ADALINE using stochastic gradient descent was equal to 
+    five times the number of input bits (x<sub>1</sub>, x<sub>2</sub>,... x<sub>j</sub>, b). His findings can't
+    be directly applied to the models described here because he only used -1 and 1 as inputs to his machine, 
+    didn't use a learning rate, and used stochastic gradient descent (updating with respect to 1 point at a
+    time) instead of gradient descent. Still, it can be interesting to make an approximation. <br> <br>
+
+    Looking at the 0.1 learning rate ADALINE model, which classified perfectly after 29 updates: <br><br>
+    It has 4 inputs. Multiplied by 5, this yields 20 training updates. This would be Widrow's calculation without
+    adjustments for the different model used here. <br><br>
+
+    Its learning, however, should be
+    10 times as slow because of its learning rate of 0.1. This yields 200 training updates. Recall that 
+    Professor Widrow designed this approximator for stochastic gradient descent, which in this case is less
+    accurate than gradient descent. Since gradient descent allows ADALINE to look at all 20 input points before
+    updating parameters, the most benefit it could offer is a factor of 20. Realistically, gradient descent
+    isn't 20 times more efficient, so it would be within a range of 1-29 times more efficient. We obtain an approximation 
+    of between 10-200 training examples to achieve an acceptable error, which 29 easily fits into. <br><br> 
+
+    The loss chart of the same ADALINE model, this time implemented with stochastic gradient descent rather
+    than gradient descent, is shown below:
+
+    <div class="centerImg">
+      <img src="sgd-loss.png" width="550" height="350" alt="sgd-loss">
+    </div> 
+    
+    <a href="https://github.com/J-Mango-19/Adaline-implementation/blob/main/Adaline_SGD_normalized.py"> ADALINE Python Code (SGD, normalized) <a> <br>
+    It's clear that stochastic gradient descent (SGD) is more noisy than gradient descent (GD). It's also
+    less effective per update than gradient descent: after 20 iterations, SGD has a MSE of 0.65, while GD
+    has a MSE of 0.54. Worse still, the lowest MSE that SGD reaches is about 0.20, while GD can reach 0.185.
+    <br><br> 
+    However, SGD comes with advantages, particularly in modern neural networks. First, it's faster to
+    compute, since it only looks at one training point at a time. Second, it holds far less memory. In fact,
+    many datasets are so large that it's not feasible to look at every training example at once. Third, SGD can
+    mitigate the issue of getting stuck in local minima because its updates are noisy. The loss function for each
+    individual training point is different, so with each update, the model sees a slightly different loss 
+    function. Every input point's loss function is roughly similar to the loss function derived from all the 
+    points, except that its smaller features will be different. SGD avoids getting stuck in the local minima
+    because the local minima move every time it updates. <br><br> 
+
+    Many modern neural networks utilize a method called minibatch gradient descent, which aims to combine the 
+    accuracy of GD with the efficiency and flexibility of SGD. Minibatch gradient descent involves taking groups
+    of training data and updating the parameters while looking at just that group of points.  
+
+  </div>
+  <div id="sec4">
+  <h3> 1961 - MADALINE </h3>
+
+  <p>
+
+  MADALINE (Multiple ADALINE) was developed in 1961 by the same pair that invented ADALINE - Bernard Widrow and
+  Ted Hoff. As suggested in its name, it incorporates multiple ADALINE structures within its architecture, which
+  gives it the distinction as the first machine learning model (aside from models outside of this path to neural
+  nets, such
+  as K Nearest Neighbors) to set nonlinear decision boundaries. MADALINE's invention also marked a substantial
+  step forward in the intuition behind machine learning, which still holds today: combining multiple, even many,
+  units leads to 
+  valuable emergent behavior. It's for these reasons that MADALINE was the first machine learning 
+  model to be implemented outside of research settings. <br><br>
+  
+  Like ADALINE, MADALINE's architecture accommodates any number of inputs. Any number of ADALINE's are also 
+  permissible, except in the second layer where there must be just one ADALINE. Every ADALINE is "connected" to
+  every input (where a connection is inclusion in the calculation
+  of \(z\)). This constitutes the input layer and the first layer. MADALINE includes a third layer of just one 
+  ADALINE that takes the ADALINES from the previous layer as input, and outputs the model's decision. MADALINE is
+  visualized below: 
+  
+  <div class="centerImg">
+    <img src="madaline-architecture.png" width="900" height="500" alt="madaline-architecture">
+  </div>
+
+  To interpret this diagram, 
+  note that: <br>
+  • The three layers (0 : Input , 1 : Multiple ADALINES, 2 : The lone ADALINE) are denoted with
+  superscript.<br> 
+  &nbsp Labeling layers 0 & 1 would cause unnecessary clutter here and is omitted. <br>
+  • The first (left) subscript in each weight corresponds to the input value it multiplies, from 1-n. <br>
+  • The second (right) subscript corresponds to the z ADALINE that it feeds into, from 1-m. <br>
+  • Each z is an unactivated ADALINE, which is passed through F() to complete each ADALINE. <br> <br>
+
+  The XOR (Exclusive OR) problem showcases the nonlinear classification ability of MADALINE, while keeping the 
+  calculations relatively simple by using only two input dimensions and two ADALINES in its first layer. 
+
+  <div class="centerImg">
+    <img src="XOR-gate.png" width="300" height="350" alt="XOR-gate">
+  </div>
+
+
+  This can easily be represented geometrically, with inputs as coordinates and color as output (-1: Red, 
+  1: Green):
+
+  <div class="centerImg">
+    <img src="XOR-graphed.png" width="400" height="350" alt="XOR-graphed">
+  </div>
+  It's clear that no single line could possibly separate these perfectly, which is why 
+  MADALINE was the first machine learning model to solve this problem. 
+  Let's first examine how an already trained MADALINE processes input and returns a classification, step by
+  step. <br> For reference, the weights and biases of this network are as follows: <br><br>
+  
+  • Layer 1, First ADALINE: <br> 
+  - \(w_{11} = 1.32 \) <br>
+  - \(w_{21} = -1.34 \) <br>
+  - \(b_1 = -1.07 \) <br> <br>
+
+  • Layer 1, Second ADALINE: <br> 
+  - \(w_{12} = -1.29 \) <br>
+  - \(w_{22} = 1.29 \) <br>
+  - \(b_2 = -1.08 \) <br><br>
+
+  • Layer 2, ADALINE: <br>
+  - \(w_1^2 = 1 \) <br>
+  - \(w_2^2 = 1 \) <br>
+  - \(b_1^2 = 0 \) <br><br>
+  
+  Recall that ADALINE's output is calculated according to \(F(w·x +b)\) <br><br>
+
+  Let's give this MADALINE \((x_1, x_2) = (1, 1):\) This evaluates to -1 according to the XOR truth table. <br><br>
+
+  The ADALINES in the first layer are calculated as: <br><br>
+
+  \((1.32)(1) + (-1.34)(1) + -1.07 = -1.09 \to F(-1.09) = -1 \) <br><br>
+
+  \((-1.29)(1) + (1.29)(1) + -1.08 = -1.08 \to F(-1.08) = -1 \) <br><br>
+
+  The ADALINE in the second layer is calculated using the outputs of the ADALINES in the first layer as input: 
+  <br><br>
+
+  \((1)(-1) + (1)(-1) + 0 = -2 \to F(-2) = -1 \)<br><br>
+
+  This MADALINE is visualized geometrically (red space represents -1 classification,
+  green space represents 1 classification) below: 
+
+  <div class="centerImg">
+    <img src="MADALINE-graphed.png", width="460" height="460" alt="MADALINE-graphed">
+  </div>
+
+  Each ADALINE in the first layer provides one of the sections of green space. All 
+  input points above the line \(-1.29x_1+1.29x_2-1.08=0\) are classified as 1 by the 
+  activation function of the first ADALINE. All input points below the line 
+  \(1.32x_1-1.34x_2-1.07\) are classified as 1 by the activation function of the second
+  ADALINE.<br><br>Since the activation function F returns 1 whenever its inputs are
+  greater than
+  zero, only one positive input is neccesary for the second layer's ADALINE to return a 1
+  . Thus, the model can output a 1 in two different areas. <br>
+  The remaining area, where both layer-1 ADALINES return -1, is in turn classified as 
+  -1 by the remaining ADALINE. <br><br>
+
+  Let's take a look at how MADALINE learned this decision boundary. Unsurprisingly, 
+  the ADALINES that make up ADALINE learn the same way they did originally. The ADALINE
+  in the second layer, however, does not learn. Its weights and biases are fixed as 
+  hyperparameters. At this time, the method to update weights in more than one layer
+  has not been invented yet, which restricts MADALINE to two layers with one learning
+  layer. The invention of this process, called backpropagation, is what will turn 
+  MADALINE into a fully fledged neural network. 
+
+
+  In this 
+  implementation, learning is done with SGD rather than regular gradient descent as 
+  was described for the ADALINES before. The difference is that there's no need to take
+  an average loss over the training examples since only one is used at a time.   
+
+
+  Let's step through how MADALINE learned this decision boundary: 
+
+
+  <!-- don't forget to define activation function -->
+
+
+
+
+  
+
+
+
+  
+
+  <br><br><br><br><br><br><br>
+  </p>
+
+  </div> <!-- for sec4 div -->
+ </div> <!-- for content div -->
+
+  <script src="script.js"></script>
+  </body>
+</html>
+
+    
