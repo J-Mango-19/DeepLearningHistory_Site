@@ -41,7 +41,7 @@
     <h3> Table of Contents </h3>
     <ol>
       <li> Introduction </li>
-      <li> Warren McCulloch and Walter Pitts: The McCulloch-Pitts Neuron - 1940s </li>
+      <li> Warren McCulloch and Walter Pitts: The McCulloch-Pitts Neuron - 1943 </li>
       <li> Frank Rosenblatt: The Perceptron - 1957 </li>
       <li> Bernard Widrow and Ted Hoff: ADALINE - 1960 </li>
       <li> Bernard Widrow and Ted Hoff: MADALINE - 1961 </li>
@@ -56,8 +56,56 @@
   <div id="sec1">
 
     <h3> 1943 - The McCulloch-Pitts Neuron </h3>
-    <p class="explanation"> In 1943, Warren McCulloch and Walter Pitts developed the first mathematical
-    representation of neurons in the brain, published in their paper "A Logical Calculus of the Ideas Immanent in Nervous Activity". </p>
+    <p class="explanation"> In 1943, Warren McCulloch and Walter Pitts established a new field of research by developing the first mathematical
+    representation of neurons in the brain, published in their paper "A Logical Calculus of the Ideas Immanent in Nervous Activity". 
+    The unlikely duo of college professor and homeless teenager understood thought by organizing neurons and synapses as logical expressions, an approach
+    that was unheard of at the time. The fact that their paper cited just three sources, all foundational texts in the field of logic, speaks to the
+    novelty of their proposal. <br><br>
+
+    When McCulloch and Pitts published, it had been known for decades that the brain consisted of neurons that were connected by synapses, and that 
+    information collected by these synapses caused the neuron to turn on or off, sending an "on" signal out to other neurons accordingly. What 
+    wasn't known, and still isn't, is exactly what each neuron does with its input signals to turn on or off. McCulloch and Pitts theorized that the 
+    decisions could be represented by logical expressions. Then, as an example of its ability to model something as abstract as a
+    thought, they demonstrated that perception of and heat and cold could be modeled by a series of connected logical "neurons". The paper visualized this
+    logic using connected neurons, and their visualization is shown below. <br>
+
+    <div class="centerImg">
+      <img src="./assets/MP_visual.png" width = "350" height = "250" alt="example-diagram">
+    </div>
+
+    Each triangle represents an instance of \(N_i\) which is neuron \(N\), identified by number \(i\), at a discrete moment in time \(t\). 
+    The lines, representing synapses, connect input and output
+    signals between the neurons. Each neuron requires at least two  excitatory ("on") signals to fire an on signal itself, or else no signal will be fired. 
+    Filled-in circles represent standard connections, and the open circles represent the negation of the signal carried by that synapse, analogous to
+    an inhibitory connection. <br>
+
+    In this example, \(N_1\) and \(N_2\) are hot and cold receptors, respectively. \(N_3\) and \(N_4\) are 
+    neurons that when activated, represent the perception of hot and cold. The network indeed models their example, which they describe as: "If a
+    cold object is held to the skin for a moment and removed, a sensation of heat will be felt; if it is applied for a longer time, the sensation
+    will be only of cold, with no preliminary warmth, however transient." Their translation to formal logic is below: 
+
+    <div class="centerImg">
+      <img src="./assets/MP_logic.png" width = "350" height = "100" alt="example-logic">
+    </div>
+
+    To convert the now outdated notation used in their logical expressions to modern notation, ignore the dots, unless they appear directly between
+    two instances of \(N_i(t)\), in which case it means AND, and substitute "~" with NOT. <br><br>
+
+    The pair sought to understand thought more than to recreate it, but other academics soon realized that machines would be capable of implementing 
+    their model, simulating intelligence.
+    Here, learning-focused interpretations of the McCulloch-Pitts model will be followed, but it's worth noting the model's contribution to
+    standard computing as part of its legacy. John Von Neumann proposed the Von Neumann architecture, ubiquitous in modern computuers, in "First
+    Draft of a Report on the EDVAC" in 1945. The draft was never completed, but Von Neumann did manage to cite one paper: McCulloch and Pitts'. 
+    His implementation of computer memory was inspired by a circular group of neurons passing the same piece of information around indefinitely. <br>
+
+    <br>
+    McCulloch and Pitts avoided the issue of learning in their model because it would greatly complicate how the logic would flow through a network
+    while its logical components were being modified. The McCulloch-Pitts neuron's successors would define and improve upon learning algorithms, but 
+    these algorithms were designed more heavily through intuition than neuroscience. In fact, nearly all of the shared attributes between a 
+    modern neural network and a brain can also be found in the McCulloch-Pitts neuron. This means that the McCulloch-Pitts neuron model is the source of the
+    Artificial Neural Network's name.
+    </p>
+
 
     <hr>
   </div>
@@ -940,7 +988,7 @@
   </div> <!-- end sec4 div -->
 
   <div id = "sec5"> <!-- sec5 div -->
-    <h3> 1986 - The Modern Neural Network </h3>
+    <h3> 1986 - The Modern Neural Network (MLP) </h3>
     <p>
     Interest in neural networks died down in the decades following MADALINE's invention due to what researchers at the time coined "the credit assignment problem". 
     Widrow's job assigner, as clumsy as it was in the simple case of two layers, could not be effectively extended to larger, more complex neural networks. It became 
